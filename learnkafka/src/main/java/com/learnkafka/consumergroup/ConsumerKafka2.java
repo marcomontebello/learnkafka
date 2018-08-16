@@ -21,7 +21,7 @@ public static void main(String[] args) {
 		
 		
 		ArrayList<String> topics=new ArrayList<String>();
-		topics.add("my-fifth-topic");
+		topics.add("replicated-and-partitioned-topic");
 		
 		consumer.subscribe(topics); // You can subscribe to any number of topics.
 		
