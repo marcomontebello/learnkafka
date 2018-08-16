@@ -16,14 +16,32 @@ public class ProducerKafka {
 		
 		KafkaProducer<String,String> myProducer= new KafkaProducer<String,String>(properties);
 		
-			try {
-			
-			for(int i=1;i<250;i++){
-				myProducer.send(new  ProducerRecord<String, String>("my-fifth-topic", "Message Value : " + Integer.toString(i)));
-				myProducer.send(new  ProducerRecord<String, String>("my-fifth-topic", "url:<local-directory-path>/file"));
+		try {
 
+			for(int i=1;i<50;i++){
+			
+				
+			    /** DIRECT PRODUCER PARTITIONING MECHANISM */
+				myProducer.send(new  ProducerRecord<String, String>("replicated-and-partitioned-topic", 2, "message","Message Value : " + Integer.toString(i)));
+				
+			} 
+			
+				for(int i=50;i<100;i++){	
+				 
+				/** ROUND-ROBIN PRODUCER PARTITIONING MECHANISM - elimino numero partizione e chiave! */
+				myProducer.send(new  ProducerRecord<String, String>("replicated-and-partitioned-topic","Message Value : " + Integer.toString(i)));
 				
 			}
+				/**KEY-HASHING PRODUCER PARTITIONING MECHANISM - elimino numero partizione e chiave! */
+
+				for(int i=101; i<150;i++){
+					
+					myProducer.send(new  ProducerRecord<String, String>("replicated-and-partitioned-topic","message_"+i,"Message Value : " + Integer.toString(i)));
+
+					
+				}
+				
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
